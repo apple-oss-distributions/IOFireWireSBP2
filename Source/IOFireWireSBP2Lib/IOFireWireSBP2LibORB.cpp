@@ -141,8 +141,7 @@ IOReturn IOFireWireSBP2LibORB::init( io_connect_t connection, mach_port_t asyncP
 		if( status != kIOReturnSuccess )
 			fORBRef = 0; // just to make sure
 													
-		FWLOG(( "IOFireWireSBP2LibORB :  status = 0x%08x = fORBRef 0x%08lx\n",
-																	status, fORBRef ));
+		FWLOG(( "IOFireWireSBP2LibORB :  status = 0x%08x = fORBRef 0x%llx\n", status, fORBRef ));
 	}
 			
 	return status;
@@ -299,7 +298,7 @@ void IOFireWireSBP2LibORB::staticSetCommandFlags( void * self, UInt32 flags )
 
 void IOFireWireSBP2LibORB::setCommandFlags( UInt32 flags )
 {
-	FWLOG(( "IOFireWireSBP2LibORB : setCommandFlags = %ld\n", flags ));
+	FWLOG(( "IOFireWireSBP2LibORB : setCommandFlags = 0x%08x\n", flags ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -324,7 +323,7 @@ void IOFireWireSBP2LibORB::staticSetMaxORBPayloadSize( void * self, UInt32 size 
 
 void IOFireWireSBP2LibORB::setMaxORBPayloadSize( UInt32 size )
 {
-	FWLOG(( "IOFireWireSBP2LibORB : setMaxORBPayloadSize = %ld\n", size ));
+	FWLOG(( "IOFireWireSBP2LibORB : setMaxORBPayloadSize = 0x%08x\n", size ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -348,7 +347,7 @@ void IOFireWireSBP2LibORB::staticSetCommandTimeout( void * self, UInt32 timeout 
 
 void IOFireWireSBP2LibORB::setCommandTimeout( UInt32 timeout )
 {
-	FWLOG(( "IOFireWireSBP2LibORB : setCommandTimeout = %ld\n", timeout ));
+	FWLOG(( "IOFireWireSBP2LibORB : setCommandTimeout = 0x%08x\n", timeout ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -372,7 +371,7 @@ void IOFireWireSBP2LibORB::staticSetCommandGeneration( void * self, UInt32 gener
 
 void IOFireWireSBP2LibORB::setCommandGeneration( UInt32 generation )
 {
-	FWLOG(( "IOFireWireSBP2LibORB : setCommandGeneration = %ld\n", generation ));
+	FWLOG(( "IOFireWireSBP2LibORB : setCommandGeneration = 0x%08x\n", generation ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -687,5 +686,5 @@ IOReturn IOFireWireSBP2LibORB::LSIWorkaroundSyncBuffersForInput( void )
 
 UInt32 IOFireWireSBP2LibORB::getORBRef( void )
 {
-	return fORBRef;
+	return (UInt32)fORBRef;
 }

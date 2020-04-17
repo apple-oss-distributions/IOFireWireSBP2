@@ -107,7 +107,7 @@ IOFWSBP2PseudoAddressSpace * IOFWSBP2PseudoAddressSpace::simpleRW(	IOFireWireBus
             break;
         }
         
-		me->fDesc = IOMemoryDescriptor::withAddress(data, len, kIODirectionOutIn);
+		me->fDesc = IOMemoryDescriptor::withAddress(data, len, kIODirectionInOut);
         if(!me->fDesc) 
 		{
             me->release();

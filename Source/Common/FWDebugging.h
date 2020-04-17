@@ -9,20 +9,15 @@
 
 // the controls 
 
-#define USEFIRELOG 0
-#define FWDIAGNOSTICS 0
 #define FWLOGGING 0
+#define FWASSERTS 0
+
+#define FWDIAGNOSTICS 0
 #define LSILOGGING 0
 #define LSIALLOCLOGGING 0
 #define PANIC_ON_DOUBLE_APPEND 0
 
 ///////////////////////////////////////////
-
-#if USEFIRELOG
-	#if KERNEL
-	#include <IOKit/firewire/IOFireLog.h>
-	#endif
-#endif
 
 #if FWLOGGING
 #define FWLOG(x) printf x
@@ -31,29 +26,25 @@
 #endif
 
 #if FWLOGGING
-	#if USEFIRELOG
-	#define FWKLOG(x) FireLog x
-	#else
-	#define FWKLOG(x) IOLog x
-	#endif
+#define FWKLOG(x) IOLog x
 #else
 #define FWKLOG(x) do {} while (0)
 #endif
 
-#if FWLOGGING
-#define FWKLOGASSERT(a) { if(!(a)) { IOLog( "File "__FILE__", line %d: assertion '%s' failed.\n", __LINE__, #a); } }
+#if FWASSERTS
+#define FWKLOGASSERT(a) { if(!(a)) { IOLog( "File %s, line %d: assertion '%s' failed.\n", __FILE__, __LINE__, #a); } }
 #else
 #define FWKLOGASSERT(a) do {} while (0)
 #endif
 
-#if FWLOGGING
-#define FWLOGASSERT(a) { if(!(a)) { printf( "File "__FILE__", line %d: assertion '%s' failed.\n", __LINE__, #a); } }
+#if FWASSERTS
+#define FWLOGASSERT(a) { if(!(a)) { printf( "File %s, line %d: assertion '%s' failed.\n", __FILE__, __LINE__, #a); } }
 #else
 #define FWLOGASSERT(a) do {} while (0)
 #endif
 
-#if FWLOGGING
-#define FWPANICASSERT(a) { if(!(a)) { panic( "File "__FILE__", line %d: assertion '%s' failed.\n", __LINE__, #a); } }
+#if FWASSERTS
+#define FWPANICASSERT(a) { if(!(a)) { panic( "File %s, line %d: assertion '%s' failed.\n", __FILE__, __LINE__, #a); } }
 #else
 #define FWPANICASSERT(a) do {} while (0)
 #endif

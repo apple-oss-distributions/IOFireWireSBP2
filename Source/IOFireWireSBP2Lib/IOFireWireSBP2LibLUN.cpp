@@ -281,7 +281,7 @@ IOReturn IOFireWireSBP2LibLUN::start( CFDictionaryRef propertyTable, io_service_
 	    status = IOCreateReceivePort( kOSAsyncCompleteMessageID, &fAsyncPort );
 	}
 
-	FWLOG(( "IOFireWireSBP2LibLUN : IOServiceOpen status = 0x%08lx, connection = %d\n", (UInt32) status, fConnection ));
+	FWLOG(( "IOFireWireSBP2LibLUN : IOServiceOpen status = 0x%08x, connection = %d\n", status, fConnection ));
 		
 	return status;
 }

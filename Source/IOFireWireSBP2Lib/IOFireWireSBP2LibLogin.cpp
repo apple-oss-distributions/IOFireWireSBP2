@@ -163,8 +163,7 @@ IOReturn IOFireWireSBP2LibLogin::init( io_connect_t connection, mach_port_t asyn
 		if( status != kIOReturnSuccess )
 			fLoginRef = 0; // just to make sure
 													
-		FWLOG(( "IOFireWireSBP2LibLogin :  status = 0x%08x = fLoginRef 0x%08lx\n",
-																	status, fLoginRef ));
+		FWLOG(( "IOFireWireSBP2LibLogin :  status = 0x%08x = fLoginRef 0x%08llx\n", status, fLoginRef ));
 	}
 	
 	if( status == kIOReturnSuccess )
@@ -372,7 +371,7 @@ void IOFireWireSBP2LibLogin::staticSetLoginFlags( void * self, UInt32 flags )
 
 void IOFireWireSBP2LibLogin::setLoginFlags( UInt32 flags )
 {
-	FWLOG(( "IOFireWireSBP2LibLogin : setLoginFlags: 0x%08lx\n", flags ));
+	FWLOG(( "IOFireWireSBP2LibLogin : setLoginFlags: 0x%08x\n", flags ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -492,7 +491,7 @@ UInt32 IOFireWireSBP2LibLogin::getLoginID( void )
 	if( status != kIOReturnSuccess )
 		loginID = 0;
 		
-	return loginID;
+	return (UInt32)loginID;
 }
 
 // setMaxPayloadSize
@@ -506,7 +505,7 @@ void IOFireWireSBP2LibLogin::staticSetMaxPayloadSize( void * self, UInt32 size )
 
 void IOFireWireSBP2LibLogin::setMaxPayloadSize( UInt32 size )
 {
-	FWLOG(( "IOFireWireSBP2LibLogin : setReconnectTime = %ld\n", size ));
+	FWLOG(( "IOFireWireSBP2LibLogin : setReconnectTime = 0x%08x\n", size ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -531,7 +530,7 @@ void IOFireWireSBP2LibLogin::staticSetReconnectTime( void * self, UInt32 time )
 
 void IOFireWireSBP2LibLogin::setReconnectTime( UInt32 time )
 {
-	FWLOG(( "IOFireWireSBP2LibLogin : setReconnectTime = %ld\n", time ));
+	FWLOG(( "IOFireWireSBP2LibLogin : setReconnectTime = 0x%08x\n", time ));
 		
 	uint32_t len = 0;
 	uint64_t params[2];
@@ -1075,6 +1074,6 @@ IOReturn IOFireWireSBP2LibLogin::setPassword( void * buffer, UInt32 length )
 
 UInt32 IOFireWireSBP2LibLogin::getLoginRef( void )
 {
-	return fLoginRef;
+	return (UInt32)fLoginRef;
 }
 

@@ -69,10 +69,12 @@ static void SBP2SwapInt32Array(void * array, int bytes)
             quads[bytes] = OSSwapInt32(quads[bytes]);
     }
 }
+
 static inline void SBP2SwapHostToBigInt32Array(void * array, int bytes)
 { SBP2SwapInt32Array(array, bytes); }
 static inline void SBP2SwapBigToHostInt32Array(void * array, int bytes)
 { SBP2SwapInt32Array(array, bytes); }
+
 #else
 #error Unknown endianess
 #endif
@@ -585,7 +587,7 @@ IOReturn IOFireWireSBP2Login::allocateResources( void )
 			UInt32 size = fFastStartMaxPayload * 4;
 			if( size == 0 )
 				size = 4096;
-			fFetchAgentWriteCommandMemory = IOBufferMemoryDescriptor::withOptions( kIODirectionOutIn | kIOMemoryUnshared, size, PAGE_SIZE );
+			fFetchAgentWriteCommandMemory = IOBufferMemoryDescriptor::withOptions( kIODirectionInOut | kIOMemoryUnshared, size, PAGE_SIZE );
 			if( fFetchAgentWriteCommandMemory == NULL )
 				status = kIOReturnNoMemory;
 		}
@@ -1180,7 +1182,7 @@ IOReturn IOFireWireSBP2Login::setPassword( IOMemoryDescriptor * memory )
 			fLoginORB.password[0] = 0;
 			fLoginORB.password[1] = 0;
 			fLoginORB.passwordLength = 0;			
-			status = memory->readBytes( 0, &(fLoginORB.password), len );
+			memory->readBytes( 0, &(fLoginORB.password), len );
 		}
 		else
 		{
@@ -2109,11 +2111,10 @@ void IOFireWireSBP2Login::startReconnectTimer( void )
 		fReconnectTimeoutTimerSet = false;
 	}
 	
-#if FWLOGGING
     if( fReconnectTimeoutTimerSet )
-    FWKLOG( ("IOFireWireSBP2Login<%p> : reconnect timeout set for %d microseconds \n", this, ((fManagementTimeout + 1000) * 1000)) );
-#endif
-    
+    {
+        FWKLOG( ("IOFireWireSBP2Login<%p> : reconnect timeout set for %d microseconds \n", this, ((fManagementTimeout + 1000) * 1000)) );
+    }
 }
 
 // doReconnect
@@ -2947,7 +2948,7 @@ IOReturn IOFireWireSBP2Login::executeORB( IOFireWireSBP2ORB * orb )
 		
 		orb->prepareFastStartPacket( descriptor );
 	
-		fastStartPacketBytes = descriptor->getLength();	
+		fastStartPacketBytes = (UInt32)descriptor->getLength();	
 	}
 	
 #if FWDIAGNOSTICS
@@ -2976,7 +2977,7 @@ IOReturn IOFireWireSBP2Login::executeORB( IOFireWireSBP2ORB * orb )
 			if( fFetchAgentWriteCommandInUse )
 			{
 				fORBToWrite = orb;
-		//		IOLog( "IOFireWireSBP2Login : fetch agent write command busy, putting aside orb 0x%08lx\n", orb );
+		// IOLog( "IOFireWireSBP2Login : fetch agent write command busy, putting aside orb 0x%08lx\n", orb );
 			}
 			else
 			{

@@ -451,7 +451,7 @@ IOReturn IOFireWireSBP2ManagementORB::setResponseBuffer
     
 	if( desc != NULL )
     {
-        len = desc->getLength();
+        len = (UInt32)desc->getLength();
 		
 		fResponseMap = desc->map();
 		if( fResponseMap != NULL )

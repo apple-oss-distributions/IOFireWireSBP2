@@ -512,7 +512,7 @@ IOReturn IOFireWireSBP2UserClient::openWithSessionRef(  IOExternalMethodArgument
 	{
 		IOFireWireController * control = fProviderLUN->getFireWireUnit()->getController();
 		IOFWUserObjectExporter * exporter = control->getSessionRefExporter();
-		service = (IOService*) exporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOService) );
+		service = (IOService*) exporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOService) );
 		if( service == NULL )
 			status = kIOReturnBadArgument;
 	}
@@ -1099,7 +1099,7 @@ IOReturn IOFireWireSBP2UserClient::releaseLogin
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1109,7 +1109,7 @@ IOReturn IOFireWireSBP2UserClient::releaseLogin
 	if( status == kIOReturnSuccess )
 	{
 		// remove the login
-		fExporter->removeObject( arguments->scalarInput[0] );
+		fExporter->removeObject( (UInt32)arguments->scalarInput[0] );
 		
 		// remove all orbs, since login holds a reference to them
 		IOFireWireSBP2ORB * item = NULL;
@@ -1153,7 +1153,7 @@ IOReturn IOFireWireSBP2UserClient::submitLogin
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1184,7 +1184,7 @@ IOReturn IOFireWireSBP2UserClient::submitLogout
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1213,7 +1213,7 @@ IOReturn IOFireWireSBP2UserClient::setLoginFlags
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1247,7 +1247,7 @@ IOReturn IOFireWireSBP2UserClient::getMaxCommandBlockSize
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1278,7 +1278,7 @@ IOReturn IOFireWireSBP2UserClient::getLoginID
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1307,7 +1307,7 @@ IOReturn IOFireWireSBP2UserClient::setReconnectTime
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1338,7 +1338,7 @@ IOReturn IOFireWireSBP2UserClient::setMaxPayloadSize
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1382,7 +1382,7 @@ IOReturn IOFireWireSBP2UserClient::submitFetchAgentReset(  IOExternalMethodArgum
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1439,7 +1439,7 @@ IOReturn IOFireWireSBP2UserClient::ringDoorbell(  IOExternalMethodArguments * ar
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1474,7 +1474,7 @@ IOReturn IOFireWireSBP2UserClient::enableUnsolicitedStatus(  IOExternalMethodArg
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1509,7 +1509,7 @@ IOReturn IOFireWireSBP2UserClient::setBusyTimeoutRegisterValue(  IOExternalMetho
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1590,7 +1590,7 @@ IOReturn IOFireWireSBP2UserClient::setPassword(  IOExternalMethodArguments * arg
 	IOFireWireSBP2Login * login = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
+		login = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2Login) );
 		if( !login || fLogin != login )
 		{
 			status = kIOReturnBadArgument;
@@ -1610,7 +1610,7 @@ IOReturn IOFireWireSBP2UserClient::setPassword(  IOExternalMethodArguments * arg
     {
 		memory = IOMemoryDescriptor::withAddressRange(	buffer, 
 														length,
-														kIODirectionOutIn, fTask );
+														kIODirectionInOut, fTask );
         if( !memory )
             status = kIOReturnNoMemory;
     }
@@ -1682,7 +1682,7 @@ IOReturn IOFireWireSBP2UserClient::releaseORB
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		{
 			status = kIOReturnBadArgument;
@@ -1691,7 +1691,7 @@ IOReturn IOFireWireSBP2UserClient::releaseORB
 	
 	if( status == kIOReturnSuccess )
 	{
-		fExporter->removeObject( arguments->scalarInput[0] );
+		fExporter->removeObject( (UInt32)arguments->scalarInput[0] );
 	}
 	
 	if( orb )
@@ -1719,7 +1719,7 @@ IOReturn IOFireWireSBP2UserClient::submitORB
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1752,7 +1752,7 @@ IOReturn IOFireWireSBP2UserClient::setCommandFlags
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1785,7 +1785,7 @@ IOReturn IOFireWireSBP2UserClient::setMaxORBPayloadSize
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1818,7 +1818,7 @@ IOReturn IOFireWireSBP2UserClient::setORBRefCon
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1851,7 +1851,7 @@ IOReturn IOFireWireSBP2UserClient::setCommandTimeout
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1884,7 +1884,7 @@ IOReturn IOFireWireSBP2UserClient::setCommandGeneration
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1917,7 +1917,7 @@ IOReturn IOFireWireSBP2UserClient::setToDummy
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -1955,7 +1955,7 @@ IOReturn IOFireWireSBP2UserClient::setCommandBuffersAsRanges
 
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 			status = kIOReturnError;
 	}
@@ -2019,7 +2019,7 @@ IOReturn IOFireWireSBP2UserClient::setCommandBuffersAsRanges
     {
 		status = orb->setCommandBuffersAsRanges64(	rangeBytes,
 													withCount,
-													kIODirectionOutIn,
+													kIODirectionInOut,
 													fTask,
 													offset,
 													length );
@@ -2059,7 +2059,7 @@ IOReturn IOFireWireSBP2UserClient::releaseCommandBuffers
 	IOFireWireSBP2ORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -2094,7 +2094,7 @@ IOReturn IOFireWireSBP2UserClient::setCommandBlock
 	{
 		FWKLOG(( "IOFireWireSBP2UserClient : setCommandBlock - ORBRef = 0x%08lx buffer = 0x%08lx length = %d\n", (UInt32)arguments->scalarInput[0], (UInt32)arguments->scalarInput[1], (UInt32)arguments->scalarInput[2] ));
 
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -2149,7 +2149,7 @@ IOReturn IOFireWireSBP2UserClient::LSIWorkaroundSetCommandBuffersAsRanges
 
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
+		orb = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ORB) );
 		if( !orb )
 			status = kIOReturnError;
 	}
@@ -2250,7 +2250,7 @@ IOReturn IOFireWireSBP2UserClient::setMgmtORBCallback
     
     if( status == kIOReturnSuccess )
     {
-		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !orb )
             status = kIOReturnError;
     }
@@ -2280,7 +2280,7 @@ IOReturn IOFireWireSBP2UserClient::releaseMgmtORB
 	IOFireWireSBP2ManagementORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !orb )
 		{
 			status = kIOReturnBadArgument;
@@ -2289,7 +2289,7 @@ IOReturn IOFireWireSBP2UserClient::releaseMgmtORB
 	
 	if( status == kIOReturnSuccess )
 	{
-		fExporter->removeObject( arguments->scalarInput[0] );
+		fExporter->removeObject( (UInt32)arguments->scalarInput[0] );
 	}
 	
 	if( orb )
@@ -2315,7 +2315,7 @@ IOReturn IOFireWireSBP2UserClient::submitMgmtORB
 	IOFireWireSBP2ManagementORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -2348,7 +2348,7 @@ IOReturn IOFireWireSBP2UserClient::setMgmtORBCommandFunction
 	IOFireWireSBP2ManagementORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !orb )
 		  status = kIOReturnError;
 	}
@@ -2382,14 +2382,14 @@ IOReturn IOFireWireSBP2UserClient::setMgmtORBManageeORB
 		
 	if( status == kIOReturnSuccess )
 	{
-		mgmtORB = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		mgmtORB = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !mgmtORB )
 			status = kIOReturnError;
 	}
 	
 	if( status == kIOReturnSuccess )
 	{
-		manageeORB = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( arguments->scalarInput[1], OSTypeID(IOFireWireSBP2ORB) );		
+		manageeORB = (IOFireWireSBP2ORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[1], OSTypeID(IOFireWireSBP2ORB) );
 		if( !manageeORB )
 			status = kIOReturnError;
 	}
@@ -2430,14 +2430,14 @@ IOReturn IOFireWireSBP2UserClient::setMgmtORBManageeLogin
 		
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !orb )
 			status = kIOReturnError;
 	}
 
 	if( status == kIOReturnSuccess )
 	{
-		manageeLogin = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( arguments->scalarInput[1], OSTypeID(IOFireWireSBP2Login) );
+		manageeLogin = (IOFireWireSBP2Login*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[1], OSTypeID(IOFireWireSBP2Login) );
 		if( !manageeLogin )
 		{
 			status = kIOReturnBadArgument;
@@ -2478,7 +2478,7 @@ IOReturn IOFireWireSBP2UserClient::setMgmtORBResponseBuffer
 	IOFireWireSBP2ManagementORB * orb = NULL;
 	if( status == kIOReturnSuccess )
 	{
-		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
+		orb = (IOFireWireSBP2ManagementORB*) fExporter->lookupObjectForType( (UInt32)arguments->scalarInput[0], OSTypeID(IOFireWireSBP2ManagementORB) );
 		if( !orb )
 			status = kIOReturnError;
 	}
@@ -2501,7 +2501,7 @@ IOReturn IOFireWireSBP2UserClient::setMgmtORBResponseBuffer
     {
 		memory = IOMemoryDescriptor::withAddressRange(	buffer, 
 														length,
-														kIODirectionOutIn, fTask );
+														kIODirectionInOut, fTask );
         if( !memory )
             status = kIOReturnNoMemory;
     }

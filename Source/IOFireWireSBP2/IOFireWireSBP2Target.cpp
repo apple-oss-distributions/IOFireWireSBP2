@@ -988,8 +988,11 @@ IOReturn IOFireWireSBP2Target::beginIOCriticalSection( void )
 		}
 	}
 	
-	FWKLOG(( "IOFireWireSBP2Target<%p>::beginIOCriticalSection status = 0x%08lx\n", this, (UInt32)status ));
-	
+	if( status != kIOReturnSuccess )
+	{
+		FWKLOG(( "IOFireWireSBP2Target<%p>::beginIOCriticalSection ERROR: status = 0x%08lx\n", this, (UInt32)status ));
+	}
+    
 	return status;
 }
 
@@ -1012,11 +1015,7 @@ void IOFireWireSBP2Target::endIOCriticalSection( void )
 		}
 		else
 		{
-#if __LP64__
-			IOLog( "IOFireWireSBP2Target<0x%016llx>::endIOCriticalSection - fIOCriticalSectionCount == 0!\n", (UInt64)this );
-#else
-			IOLog( "IOFireWireSBP2Target<%p>::endIOCriticalSection - fIOCriticalSectionCount == 0!\n", this );
-#endif
+			FWKLOG(( "IOFireWireSBP2Target<%p>::endIOCriticalSection - fIOCriticalSectionCount == 0!\n", this ));
 		}
 	}
 }
@@ -1031,11 +1030,11 @@ IOReturn IOFireWireSBP2Target::synchMgmtAgentAccess(
 {
 	if( fExpansionData->fNumLUNs > 1 )
 	{	
-		FWKLOG(("IOFireWireSBP2Target::synchMgmtAgentAccess count %x\n",fExpansionData->fNumberPendingMgtAgentOrbs + 1));
+		FWKLOG(("IOFireWireSBP2Target<%p>::synchMgmtAgentAccess count %x\n", this, fExpansionData->fNumberPendingMgtAgentOrbs + 1));
 	
 		if( fExpansionData->fNumberPendingMgtAgentOrbs++ )
 		{
-			FWKLOG(("IOFireWireSBP2Target::synchMgmtAgentAccess Mgmt Agent Busy, saving submit command %08x\n",mgmtOrbCommand));
+			FWKLOG(("IOFireWireSBP2Target<%p>::synchMgmtAgentAccess Mgmt Agent Busy, saving submit command %08x\n", this, mgmtOrbCommand));
 			fExpansionData->fPendingMgtAgentCommands->setObject( mgmtOrbCommand );
 		}
 		else
@@ -1060,26 +1059,26 @@ void IOFireWireSBP2Target::completeMgmtAgentAccess( )
 	if( fExpansionData->fNumLUNs > 1 )
 	{
 
-		FWKLOG(("IOFireWireSBP2Target::completeMgmtAgentAccess >>  count %x\n",fExpansionData->fNumberPendingMgtAgentOrbs - 1));
+		FWKLOG(("IOFireWireSBP2Target<%p>::completeMgmtAgentAccess >>  count %x\n", this, fExpansionData->fNumberPendingMgtAgentOrbs - 1));
 		if( fExpansionData->fNumberPendingMgtAgentOrbs-- )
 		{
 			mgmtOrbCommand = (IOFWAsyncCommand *)fExpansionData->fPendingMgtAgentCommands->getObject( 0 ) ;
 		
 			if( mgmtOrbCommand )
 			{
-				FWKLOG(("IOFireWireSBP2Target::completeMgmtAgentAccess, calling submit command %08x\n",mgmtOrbCommand));
+				FWKLOG(("IOFireWireSBP2Target<%p>::completeMgmtAgentAccess, calling submit command %08x\n", this, mgmtOrbCommand));
 				fExpansionData->fPendingMgtAgentCommands->removeObject( 0 ) ;
 				
 				status = mgmtOrbCommand->submit() ;
 				
 				if( status )
 				{
-					FWKLOG(("IOFireWireSBP2Target::completeMgmtAgentAccess, submit for command %08x failed with %08x\n",mgmtOrbCommand,status));
+					FWKLOG(("IOFireWireSBP2Target<%p>::completeMgmtAgentAccess, submit for command %08x failed with %08x\n", this, mgmtOrbCommand,status));
 					mgmtOrbCommand->gotPacket( kFWResponseBusResetError, NULL, 0 );
 				}
 			}
 		}
-		FWKLOG(("IOFireWireSBP2Target::completeMgmtAgentAccess << count %x\n",fExpansionData->fNumberPendingMgtAgentOrbs));
+		FWKLOG(("IOFireWireSBP2Target<%p>::completeMgmtAgentAccess << count %x\n", this, fExpansionData->fNumberPendingMgtAgentOrbs));
 	}
 }
 
@@ -1108,7 +1107,7 @@ void IOFireWireSBP2Target::clearMgmtAgentAccess( )
 	{
 		IOFWAsyncCommand *				mgmtOrbCommand;
 		
-		FWKLOG(("IOFireWireSBP2Target::clearMgmtAgentAccess\n",mgmtOrbCommand));
+		FWKLOG(("IOFireWireSBP2Target<%p>::clearMgmtAgentAccess\n", this));
 			
 		while( (mgmtOrbCommand = (IOFWAsyncCommand *)fExpansionData->fPendingMgtAgentCommands->getObject( 0 ))  )
 		{
@@ -1116,7 +1115,7 @@ void IOFireWireSBP2Target::clearMgmtAgentAccess( )
 			
 			fExpansionData->fPendingMgtAgentCommands->removeObject( 0 ) ;
 			
-			FWKLOG(("IOFireWireSBP2Target::clearMgmtAgentAccess, failing command %08x\n",mgmtOrbCommand));
+			FWKLOG(("IOFireWireSBP2Target<%p>::clearMgmtAgentAccess ERROR: failing command %08x\n",mgmtOrbCommand));
 			mgmtOrbCommand->gotPacket( kFWResponseBusResetError, NULL, 0 );
 		
 			mgmtOrbCommand->release();
